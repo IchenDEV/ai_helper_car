@@ -1,7 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
-# Create your views here.
 from aicar.actions.cam_ai import play_speech
 
 

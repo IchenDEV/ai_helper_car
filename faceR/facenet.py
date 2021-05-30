@@ -17,11 +17,9 @@
 from __future__ import print_function
 import sys
 import os
-from argparse import ArgumentParser, SUPPRESS
 import cv2
 import numpy as np
 import logging as log
-from time import time
 from openvino.inference_engine import IENetwork, IECore
 
 

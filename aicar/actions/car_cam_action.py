@@ -1,74 +1,57 @@
 import time
 
+from aicar.actions.car import get_robot
+
 try:
-    from Raspblock import Raspblock
-
-    from aicar.actions.cam_ai import get_obj_pos
-
-
-    def action(w1, w2, w3, w4, dis, sleep=0.5):
-        robot = Raspblock()
-        while dis > 0:
-            dis -= 1
-            robot.Speed_Wheel_control(w1, w2, w3, w4)
-        time.sleep(sleep)
-        del robot
-
-    def action_spin_left(dis, sleep=0.5):
-        robot = Raspblock()
-        while dis > 0:
-            dis -= 1
-            robot.Speed_Wheel_control(10, 10, -10, -10)
-        time.sleep(sleep)
-        del robot
-
-    def action_spin_right(dis, sleep=0.5):
-        robot = Raspblock()
-        while dis > 0:
-            dis -= 1
-            robot.Speed_Wheel_control(-10, -10, 10, 10)
-        time.sleep(sleep)
-        del robot
-
-    def move(x, y, dis, sleep=0.5):
-        robot = Raspblock()
-        while dis > 0:
-            dis -= 1
-            robot.Speed_axis_Yawhold_control(x, y)  # Advance
-        time.sleep(sleep)
-        del robot
-
-    def move_advance(dis, sleep=0.5):
-        robot = Raspblock()
-        while dis > 0:
-            dis -= 1
-            robot.Speed_axis_Yawhold_control(0, 10)  # Advance
-        time.sleep(sleep)
-        del robot
-
-    def move_back(dis, sleep=0.5):
-        robot = Raspblock()
-        while dis > 0:
-            dis -= 1
-            robot.Speed_axis_Yawhold_control(-10, 0)  # Advance
-        time.sleep(sleep)
-        del robot
-
-    Following = False
+    '''Part of controling servo    '''
+    global leftrightpulse
+    leftrightpulse = 1500
+    global updownpulse
+    updownpulse = 1500
 
 
-    def follow():
-        global Following
-        Following = True
-        while Following:
-            pos = get_obj_pos()
-            right = 640 - pos.width - pos.left
-            move(right - pos.left, 5, 2)
+    def cam_up(dis=10):
+        global updownpulse
+        robot = get_robot()
+        updownpulse += dis
+        if updownpulse > 2500:
+            updownpulse = 2500
+        robot.Servo_control(leftrightpulse, updownpulse)
 
 
-    def stop_follow():
-        global Following
-        Following = False
+    def cam_down(dis=10):
+        global updownpulse
+        robot = get_robot()
+        updownpulse -= dis
+        if updownpulse < 500:
+            updownpulse = 500
+        robot.Servo_control(leftrightpulse, updownpulse)
+
+
+    def cam_left(dis=10):
+        global leftrightpulse
+        robot = get_robot()
+        leftrightpulse += dis
+        if leftrightpulse > 2500:
+            leftrightpulse = 2500
+        robot.Servo_control(leftrightpulse, updownpulse)
+
+
+    def cam_right(dis=10):
+        global leftrightpulse
+        robot = get_robot()
+        leftrightpulse -= dis
+        if leftrightpulse < 500:
+            leftrightpulse = 500
+        robot.Servo_control(leftrightpulse, updownpulse)
+
+
+    def cam_init():
+        global leftrightpulse, updownpulse
+        robot = get_robot()
+        leftrightpulse = 1500
+        updownpulse = 1500
+        robot.Servo_control(leftrightpulse, updownpulse)
 
 except:
     pass

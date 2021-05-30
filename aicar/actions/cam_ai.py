@@ -1,11 +1,10 @@
 import base64
-import time
 
 from aicar.actions.video_capture import encode_image, getOrgFrame
 from aicar.utils.api import imageClassifyClient, speechClient, faceClient
 from playsound import playsound
 
-from aicar.utils.faceR.faceR import faceR
+from faceR import faceR
 
 
 def get_obj_pos_stream():
@@ -30,7 +29,8 @@ def play_speech(word):
     if not isinstance(result, dict):
         with open('./temp/audio.mp3', 'wb') as f:
             f.write(result)
-        playsound("./temp/audio.mp3")
+        import subprocess
+        player = subprocess.Popen(["mplayer", "./temp/audio.mp3"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
 def upload_face(image):

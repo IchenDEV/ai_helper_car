@@ -1,26 +1,64 @@
 import time
 
+from aicar.actions.car import get_robot
+
 try:
     from Raspblock import Raspblock
 
     from aicar.actions.cam_ai import get_obj_pos
 
 
-    def action(w1, w2, w3, w4, dis):
-        robot = Raspblock()
+    def action(w1, w2, w3, w4, dis, sleep=0.5):
+        robot = get_robot()
         while dis > 0:
             dis -= 1
             robot.Speed_Wheel_control(w1, w2, w3, w4)
-            time.sleep(0.5)
+        time.sleep(sleep)
         del robot
 
 
-    def move(x, y, dis):
-        robot = Raspblock()
+    def action_spin_left(dis, sleep=0.5):
+        robot = get_robot()
+        while dis > 0:
+            dis -= 1
+            robot.Speed_Wheel_control(10, 10, -10, -10)
+        time.sleep(sleep)
+        del robot
+
+
+    def action_spin_right(dis, sleep=0.5):
+        robot = get_robot()
+        while dis > 0:
+            dis -= 1
+            robot.Speed_Wheel_control(-10, -10, 10, 10)
+        time.sleep(sleep)
+        del robot
+
+
+    def move(x, y, dis, sleep=0.5):
+        robot = get_robot()
         while dis > 0:
             dis -= 1
             robot.Speed_axis_Yawhold_control(x, y)  # Advance
-            time.sleep(0.5)
+        time.sleep(sleep)
+        del robot
+
+
+    def move_advance(dis, sleep=0.5):
+        robot = get_robot()
+        while dis > 0:
+            dis -= 1
+            robot.Speed_axis_Yawhold_control(0, 10)  # Advance
+        time.sleep(sleep)
+        del robot
+
+
+    def move_back(dis, sleep=0.5):
+        robot = get_robot()
+        while dis > 0:
+            dis -= 1
+            robot.Speed_axis_Yawhold_control(-10, 0)  # Advance
+        time.sleep(sleep)
         del robot
 
 

@@ -2,35 +2,37 @@ from django.http import HttpResponse, StreamingHttpResponse, JsonResponse
 
 # Create your views here.
 from aicar.actions.cam_ai import get_obj_pos_stream, face_cmp
+from aicar.actions.car_cam_action import cam_init, cam_up, cam_down, cam_left, cam_right
 from aicar.actions.video_capture import video, encode_image
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+def car_cam_init(request):
+    cam_init()
+    return HttpResponse("OK")
 
 
-def car_cam():
-    return HttpResponse("Hello, world. You're at the polls index.")
+def car_cam_up(request):
+    dis = request.POST["dis"]
+    cam_up(dis)
+    return HttpResponse("OK")
 
 
-def car_cam_up():
-    return HttpResponse("Hello, world. You're at the polls index.")
+def car_cam_down(request):
+    dis = request.POST["dis"]
+    cam_down(dis)
+    return HttpResponse("OK")
 
 
-def car_cam_down():
-    return HttpResponse("Hello, world. You're at the polls index.")
+def car_cam_left(request):
+    dis = request.POST["dis"]
+    cam_left(dis)
+    return HttpResponse("OK")
 
 
-def car_cam_left():
-    return HttpResponse("Hello, world. You're at the polls index.")
-
-
-def car_cam_right():
-    return HttpResponse("Hello, world. You're at the polls index.")
-
-
-def car_cam_center():
-    return HttpResponse("Hello, world. You're at the polls index.")
+def car_cam_right(request):
+    dis = request.POST["dis"]
+    cam_right(dis)
+    return HttpResponse("OK")
 
 
 def car_getVideo(request):
