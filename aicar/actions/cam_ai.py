@@ -2,8 +2,6 @@ import base64
 
 from aicar.actions.video_capture import encode_image, getOrgFrame
 from aicar.utils.api import imageClassifyClient, speechClient, faceClient
-from playsound import playsound
-
 from faceR import faceR
 
 
